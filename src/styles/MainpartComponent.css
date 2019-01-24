@@ -1,0 +1,11 @@
+#MAINPART_COMPONENT {
+  width: 80%;
+  margin: 15px auto;
+}
+#MAINPART_COMPONENT .nav.nav-tabs {
+  cursor: pointer;
+}
+#MAINPART_COMPONENT .tab_container {
+  margin-top: 15px;
+}
+/*# sourceMappingURL=MainpartComponent.css.map */
