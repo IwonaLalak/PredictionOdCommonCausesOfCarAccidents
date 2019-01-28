@@ -14,7 +14,77 @@
   text-decoration: underline;
 }
 #HEADER_COMPONENT #header_main_component {
-  height: 300px;
+  padding: 15px 0;
   background: linear-gradient(#90cb5c, #266521);
+}
+#HEADER_COMPONENT #header_main_component #inner-header-main-component-icon {
+  display: inline-block;
+  font-size: 150px;
+  margin-left: 20%;
+  margin-right: 25px;
+  transform: translate(0, 15px);
+  text-shadow: 1px 1px 5px #266521;
+}
+@media screen and (max-width: 1530px) {
+  #HEADER_COMPONENT #header_main_component #inner-header-main-component-icon {
+    font-size: 100px;
+    margin-left: 15%;
+    transform: translate(0, 0);
+  }
+}
+@media screen and (max-width: 1080px) {
+  #HEADER_COMPONENT #header_main_component #inner-header-main-component-icon {
+    display: block;
+    margin: 0;
+    text-align: center;
+  }
+}
+#HEADER_COMPONENT #header_main_component #inner-header-main-component {
+  display: inline-block;
+}
+#HEADER_COMPONENT #header_main_component #inner-header-main-component div:first-of-type h1 {
+  font-weight: bold;
+  font-size: 40px;
+  text-shadow: 1px 1px 5px #266521;
+}
+#HEADER_COMPONENT #header_main_component #inner-header-main-component div:last-of-type h2 {
+  text-shadow: 1px 1px 5px #266521;
+  color: #eee;
+  font-size: 24px;
+  width: 60%;
+}
+@media screen and (max-width: 1530px) {
+  #HEADER_COMPONENT #header_main_component #inner-header-main-component h1 {
+    font-size: 30px !important;
+  }
+  #HEADER_COMPONENT #header_main_component #inner-header-main-component h2 {
+    font-size: 18px !important;
+  }
+}
+@media screen and (max-width: 1080px) {
+  #HEADER_COMPONENT #header_main_component #inner-header-main-component {
+    display: block;
+    margin: 0;
+    text-align: center;
+  }
+  #HEADER_COMPONENT #header_main_component #inner-header-main-component h2 {
+    width: 100% !important;
+  }
+}
+#about-author-modal .col-12 div {
+  border-bottom: 1px dotted #ddd;
+  padding: 8px 15px;
+}
+#about-author-modal .col-12 div label {
+  margin-bottom: 0;
+  color: grey;
+  width: 150px;
+}
+#about-author-modal .col-12 div a {
+  color: #72bc38;
+  text-decoration: underline;
+}
+#about-author-modal .col-12 div:last-of-type {
+  border-bottom: none;
 }
 /*# sourceMappingURL=HeaderComponent.css.map */
