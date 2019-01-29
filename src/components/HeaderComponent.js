@@ -33,7 +33,7 @@ export default class HeaderComponent extends Component {
                         <div id={'inner-header-main-component'}>
                             <div>
                                 <h1>
-                                    Prediction of common causes of car accidents
+                                    Prediction of common causes of road accidents
                                 </h1>
                             </div>
                             <div>
