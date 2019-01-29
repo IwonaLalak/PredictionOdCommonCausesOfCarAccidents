@@ -5,6 +5,8 @@
   clear:both
 }
 
+@import './styles/general.css';
+
 /* PARTS */
 
 @import './styles/HeaderComponent.css';

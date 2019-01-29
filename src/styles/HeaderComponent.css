@@ -80,6 +80,9 @@
   color: grey;
   width: 150px;
 }
+#about-author-modal .col-12 div label .fa {
+  width: 20px;
+}
 #about-author-modal .col-12 div a {
   color: #72bc38;
   text-decoration: underline;
