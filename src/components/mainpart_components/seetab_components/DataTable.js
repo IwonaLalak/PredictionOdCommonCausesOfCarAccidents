@@ -92,6 +92,12 @@ export default class DataTable extends Component {
                         >
                             other contributing factor desc
                         </TableHeaderColumn>
+                        <TableHeaderColumn dataField='eventType'
+                                           filter={{type: 'TextFilter', delay: 500, placeholder: 'Szukaj'}}
+                                           thStyle={tabgrid.tg3} tdStyle={tabgrid.tg3}
+                        >
+                            event type
+                        </TableHeaderColumn>
                     </BootstrapTable>
 
                 </div>

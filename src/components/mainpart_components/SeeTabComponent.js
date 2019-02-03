@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col, Button, Spinner} from "reactstrap";
 import DataTable from "./seetab_components/DataTable";
+import PredictionCompontent from "./seetab_components/PredictionCompontent";
 
 export default class SeeTabComponent extends Component {
     constructor(props) {
@@ -49,12 +50,11 @@ export default class SeeTabComponent extends Component {
                                     :
                                     ''
                                 :
-                                <DataTable data={this.state.data}/>
+                                <div>
+                                    <DataTable data={this.state.data}/>
+                                    <PredictionCompontent data={this.state.data}/>
+                                </div>
                         }
-                    </Col>
-                    <Col xs={12}>
-
-
                     </Col>
                 </Row>
             </div>

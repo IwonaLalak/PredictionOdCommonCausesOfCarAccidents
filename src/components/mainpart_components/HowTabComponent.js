@@ -90,6 +90,7 @@ export default class HowTabComponent extends Component {
                                                 <li>CONVERTIBLE</li>
                                                 <li>OTHER VEHICLE</li>
                                                 <li>UNKNOWN VEHICLE</li>
+                                                <li>Not Entered</li>
                                             </ul>
                                         </li>
                                         <li>PEDESTRIAN</li>
@@ -97,7 +98,6 @@ export default class HowTabComponent extends Component {
                                         <li>MOTORCYCLE</li>
                                         <li>BUS (OMNIBUS)</li>
                                         <li>TAXI</li>
-                                        <li>Not Entered</li>
                                     </ul>
                                 </p>
                             </Col>
@@ -438,147 +438,152 @@ export default class HowTabComponent extends Component {
 
                                 <p>
                                     <h5>A contributing factor description</h5>
+                                    <div>
+                                        <div><span style={{fontWeight:'bold'}}>V</span> - VEHICLE</div>
+                                        <div><span style={{fontWeight:'bold'}}>H</span> - HUMAN</div>
+                                        <div><span style={{fontWeight:'bold'}}>E</span> - ENVIRONMENT</div>
+                                    </div>
                                     <ul>
                                         <li>
-                                            Accelerator Defective
+                                            <span style={{fontWeight:'bold'}}>V</span> Accelerator Defective
                                         </li>
                                         <li>
-                                            Aggressive Driving/Road Rage
+                                            <span style={{fontWeight:'bold'}}>H</span> Aggressive Driving/Road Rage
                                         </li>
                                         <li>
-                                            Alcohol Involvement
+                                            <span style={{fontWeight:'bold'}}>H</span> Alcohol Involvement
                                         </li>
                                         <li>
-                                            Animal's Action
+                                            <span style={{fontWeight:'bold'}}>E</span> Animal's Action
                                         </li>
                                         <li>
-                                            Backing Unsafely
+                                            <span style={{fontWeight:'bold'}}>H</span> Backing Unsafely
                                         </li>
                                         <li>
-                                            Brakes Defective
+                                            <span style={{fontWeight:'bold'}}>V</span> Brakes Defective
                                         </li>
                                         <li>
-                                            Cell Phone (hand held)
+                                            <span style={{fontWeight:'bold'}}>H</span> Cell Phone (hand held)
                                         </li>
                                         <li>
-                                            Driver Inattention/Distraction*
+                                            <span style={{fontWeight:'bold'}}>H</span> Driver Inattention/Distraction*
                                         </li>
                                         <li>
-                                            Driver Inexperience*
+                                            <span style={{fontWeight:'bold'}}>H</span> Driver Inexperience*
                                         </li>
                                         <li>
-                                            Driverless/Runaway Vehicle
+                                            <span style={{fontWeight:'bold'}}>V</span> Driverless/Runaway Vehicle
                                         </li>
                                         <li>
-                                            Drugs (Illegal)
+                                            <span style={{fontWeight:'bold'}}>H</span> Drugs (Illegal)
                                         </li>
                                         <li>
-                                            Eating or Drinking
+                                            <span style={{fontWeight:'bold'}}>H</span> Eating or Drinking
                                         </li>
                                         <li>
-                                            Failure to Keep Right
+                                            <span style={{fontWeight:'bold'}}>H</span> Failure to Keep Right
                                         </li>
                                         <li>
-                                            Failure to Yield Right-of-Way
+                                            <span style={{fontWeight:'bold'}}>H</span> Failure to Yield Right-of-Way
                                         </li>
                                         <li>
-                                            Fatigued/Drowsy
+                                            <span style={{fontWeight:'bold'}}>H</span> Fatigued/Drowsy
                                         </li>
                                         <li>
-                                            Fell Asleep
+                                            <span style={{fontWeight:'bold'}}>H</span> Fell Asleep
                                         </li>
                                         <li>
-                                            Following Too Closely
+                                            <span style={{fontWeight:'bold'}}>H</span> Following Too Closely
                                         </li>
                                         <li>
-                                            Glare
+                                            <span style={{fontWeight:'bold'}}>E</span> Glare
                                         </li>
                                         <li>
-                                            Illness
+                                            <span style={{fontWeight:'bold'}}>H</span> Illness
                                         </li>
                                         <li>
-                                            Lane Marking Improper/Inadequate
+                                            <span style={{fontWeight:'bold'}}>E</span> Lane Marking Improper/Inadequate
                                         </li>
                                         <li>
-                                            Lost Consciousness
+                                            <span style={{fontWeight:'bold'}}>H</span> Lost Consciousness
                                         </li>
                                         <li>
-                                            Obstruction/ Debris
+                                            <span style={{fontWeight:'bold'}}>E</span> Obstruction/ Debris
                                         </li>
                                         <li>
-                                            Other Electronic Device*
+                                            <span style={{fontWeight:'bold'}}>H</span> Other Electronic Device*
                                         </li>
                                         <li>
-                                            Other Lighting Defects
+                                            <span style={{fontWeight:'bold'}}>V</span> Other Lighting Defects
                                         </li>
                                         <li>
-                                            Other*
+                                            <span style={{fontWeight:'bold'}}>V</span> Other*
                                         </li>
                                         <li>
-                                            Outside Car Distraction*
+                                            <span style={{fontWeight:'bold'}}>H</span> Outside Car Distraction*
                                         </li>
                                         <li>
-                                            Oversized Vehicle
+                                            <span style={{fontWeight:'bold'}}>V</span> Oversized Vehicle
                                         </li>
                                         <li>
-                                            Passenger Distraction
+                                            <span style={{fontWeight:'bold'}}>H</span> Passenger Distraction
                                         </li>
                                         <li>
-                                            Passing or Lane Usage Improper
+                                            <span style={{fontWeight:'bold'}}>H</span> Passing or Lane Usage Improper
                                         </li>
                                         <li>
-                                            Passing Too Closely
+                                            <span style={{fontWeight:'bold'}}>H</span> Passing Too Closely
                                         </li>
                                         <li>
-                                            Pavement Defective
+                                            <span style={{fontWeight:'bold'}}>E</span> Pavement Defective
                                         </li>
                                         <li>
-                                            Pavement Slippery
+                                            <span style={{fontWeight:'bold'}}>E</span> Pavement Slippery
                                         </li>
                                         <li>
-                                            Pedestrian/Bicyclist Error/Confusion
+                                            <span style={{fontWeight:'bold'}}>H</span> Pedestrian/Bicyclist Error/Confusion
                                         </li>
                                         <li>
-                                            Physical Disability
+                                            <span style={{fontWeight:'bold'}}>H</span> Physical Disability
                                         </li>
                                         <li>
-                                            Prescription Medication
+                                            <span style={{fontWeight:'bold'}}>H</span> Prescription Medication
                                         </li>
                                         <li>
-                                            Reaction to Other Uninvolved Vehicle
+                                            <span style={{fontWeight:'bold'}}>H</span> Reaction to Other Uninvolved Vehicle
                                         </li>
                                         <li>
-                                            Shoulders Defective/Improper
+                                            <span style={{fontWeight:'bold'}}>E</span> Shoulders Defective/Improper
                                         </li>
                                         <li>
-                                            Steering Failure
+                                            <span style={{fontWeight:'bold'}}>V</span> Steering Failure
                                         </li>
                                         <li>
-                                            Tire Failure/Inadequate
+                                            <span style={{fontWeight:'bold'}}>V</span> Tire Failure/Inadequate
                                         </li>
                                         <li>
-                                            Tow Hitch Defective
+                                            <span style={{fontWeight:'bold'}}>V</span> Tow Hitch Defective
                                         </li>
                                         <li>
-                                            Traffic Control Device Disregarded
+                                            <span style={{fontWeight:'bold'}}>H</span> Traffic Control Device Disregarded
                                         </li>
                                         <li>
-                                            Turning Improperly
+                                            <span style={{fontWeight:'bold'}}>H</span> Turning Improperly
                                         </li>
                                         <li>
-                                            Unsafe Lane Changing
+                                            <span style={{fontWeight:'bold'}}>H</span> Unsafe Lane Changing
                                         </li>
                                         <li>
-                                            Unsafe Speed
+                                            <span style={{fontWeight:'bold'}}>H</span> Unsafe Speed
                                         </li>
                                         <li>
-                                            Using On Board Navigation Device
+                                            <span style={{fontWeight:'bold'}}>H</span> Using On Board Navigation Device
                                         </li>
                                         <li>
-                                            View Obstructed/Limited
+                                            <span style={{fontWeight:'bold'}}>E</span> View Obstructed/Limited
                                         </li>
                                         <li>
-                                            Unknown
+                                            <span style={{fontWeight:'bold'}}>H</span> Unknown
                                         </li>
                                     </ul>
                                 </p>
@@ -587,126 +592,131 @@ export default class HowTabComponent extends Component {
 
                                 <p>
                                     <h5>Other contributing factor description</h5>
+                                    <div>
+                                        <div><span style={{fontWeight:'bold'}}>V</span> - VEHICLE</div>
+                                        <div><span style={{fontWeight:'bold'}}>H</span> - HUMAN</div>
+                                        <div><span style={{fontWeight:'bold'}}>E</span> - ENVIRONMENT</div>
+                                    </div>
                                     <ul>
                                         <li>
-                                            Accelerator Defective
+                                            <span style={{fontWeight:'bold'}}>V</span> Accelerator Defective
                                         </li>
                                         <li>
-                                            Aggressive Driving/Road Rage
+                                            <span style={{fontWeight:'bold'}}>H</span> Aggressive Driving/Road Rage
                                         </li>
                                         <li>
-                                            Alcohol Involvement
+                                            <span style={{fontWeight:'bold'}}>H</span> Alcohol Involvement
                                         </li>
                                         <li>
-                                            Animal's Action
+                                            <span style={{fontWeight:'bold'}}>E</span> Animal's Action
                                         </li>
                                         <li>
-                                            Backing Unsafely
+                                            <span style={{fontWeight:'bold'}}>H</span> Backing Unsafely
                                         </li>
                                         <li>
-                                            Brakes Defective
+                                            <span style={{fontWeight:'bold'}}>V</span> Brakes Defective
                                         </li>
                                         <li>
-                                            Driver Inattention/Distraction*
+                                            <span style={{fontWeight:'bold'}}>H</span> Driver Inattention/Distraction*
                                         </li>
                                         <li>
-                                            Driver Inexperience*
+                                            <span style={{fontWeight:'bold'}}>H</span> Driver Inexperience*
                                         </li>
                                         <li>
-                                            Drugs (Illegal)
+                                            <span style={{fontWeight:'bold'}}>H</span> Drugs (Illegal)
                                         </li>
                                         <li>
-                                            Failure to Keep Right
+                                            <span style={{fontWeight:'bold'}}>H</span> Failure to Keep Right
                                         </li>
                                         <li>
-                                            Failure to Yield Right-of-Way
+                                            <span style={{fontWeight:'bold'}}>H</span> Failure to Yield Right-of-Way
                                         </li>
                                         <li>
-                                            Fatigued/Drowsy
+                                            <span style={{fontWeight:'bold'}}>H</span> Fatigued/Drowsy
                                         </li>
                                         <li>
-                                            Fell Asleep
+                                            <span style={{fontWeight:'bold'}}>H</span> Fell Asleep
                                         </li>
                                         <li>
-                                            Following Too Closely
+                                            <span style={{fontWeight:'bold'}}>H</span> Following Too Closely
                                         </li>
                                         <li>
-                                            Glare
+                                            <span style={{fontWeight:'bold'}}>E</span> Glare
                                         </li>
                                         <li>
-                                            Illness
+                                            <span style={{fontWeight:'bold'}}>H</span> Illness
                                         </li>
                                         <li>
-                                            Lane Marking Improper/Inadequate
+                                            <span style={{fontWeight:'bold'}}>E</span> Lane Marking Improper/Inadequate
                                         </li>
                                         <li>
-                                            Lost Consciousness
+                                            <span style={{fontWeight:'bold'}}>H</span> Lost Consciousness
                                         </li>
                                         <li>
-                                            Obstruction/ Debris
+                                            <span style={{fontWeight:'bold'}}>E</span> Obstruction/ Debris
                                         </li>
                                         <li>
-                                            Other Electronic Device*
+                                            <span style={{fontWeight:'bold'}}>H</span> Other Electronic Device*
                                         </li>
                                         <li>
-                                            Other*
+                                            <span style={{fontWeight:'bold'}}>V</span> Other*
                                         </li>
                                         <li>
-                                            Outside Car Distraction*
+                                            <span style={{fontWeight:'bold'}}>H</span> Outside Car Distraction*
                                         </li>
                                         <li>
-                                            Passenger Distraction
+                                            <span style={{fontWeight:'bold'}}>H</span> Passenger Distraction
                                         </li>
                                         <li>
-                                            Passing or Lane Usage Improper
+                                            <span style={{fontWeight:'bold'}}>H</span> Passing or Lane Usage Improper
                                         </li>
                                         <li>
-                                            Passing Too Closely
+                                            <span style={{fontWeight:'bold'}}>H</span> Passing Too Closely
                                         </li>
                                         <li>
-                                            Pavement Defective
+                                            <span style={{fontWeight:'bold'}}>E</span> Pavement Defective
                                         </li>
                                         <li>
-                                            Pavement Slippery
+                                            <span style={{fontWeight:'bold'}}>E</span> Pavement Slippery
                                         </li>
                                         <li>
-                                            Pedestrian/Bicyclist Error/Confusion
+                                            <span style={{fontWeight:'bold'}}>H</span> Pedestrian/Bicyclist Error/Confusion
                                         </li>
                                         <li>
-                                            Physical Disability
+                                            <span style={{fontWeight:'bold'}}>H</span> Physical Disability
                                         </li>
                                         <li>
-                                            Prescription Medication
+                                            <span style={{fontWeight:'bold'}}>H</span> Prescription Medication
                                         </li>
                                         <li>
-                                            Reaction to Other Uninvolved Vehicle
+                                            <span style={{fontWeight:'bold'}}>H</span> Reaction to Other Uninvolved Vehicle
                                         </li>
                                         <li>
-                                            Steering Failure
+                                            <span style={{fontWeight:'bold'}}>V</span> Steering Failure
                                         </li>
                                         <li>
-                                            Tire Failure/Inadequate
+                                            <span style={{fontWeight:'bold'}}>V</span> Tire Failure/Inadequate
                                         </li>
                                         <li>
-                                            Traffic Control Device Disregarded
+                                            <span style={{fontWeight:'bold'}}>H</span> Traffic Control Device Disregarded
                                         </li>
                                         <li>
-                                            Turning Improperly
+                                            <span style={{fontWeight:'bold'}}>H</span> Turning Improperly
                                         </li>
                                         <li>
-                                            Unsafe Lane Changing
+                                            <span style={{fontWeight:'bold'}}>H</span> Unsafe Lane Changing
                                         </li>
                                         <li>
-                                            Unsafe Speed
+                                            <span style={{fontWeight:'bold'}}>H</span> Unsafe Speed
                                         </li>
                                         <li>
-                                            Using On Board Navigation Device
+                                            <span style={{fontWeight:'bold'}}>H</span> Using On Board Navigation Device
                                         </li>
                                         <li>
-                                            Not Applicable
+                                            <span style={{fontWeight:'bold'}}>H</span> Unknown
                                         </li>
                                         <li>
-                                            Unknown
+                                             not given
                                         </li>
                                     </ul>
                                 </p>
