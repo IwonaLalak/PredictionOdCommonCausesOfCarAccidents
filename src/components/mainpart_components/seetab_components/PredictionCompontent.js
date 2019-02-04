@@ -15,6 +15,10 @@ export default class PredictionCompontent extends Component {
             mostCommonOnTreeLvl3: {label: '', value: 0},
             mostCommonOnTreeLvl4: {label: '', value: 0},
             processedChart: [],
+
+            vehicleDependencies: null,
+            generalDependencies: null,
+            generalAverages:null
         };
     }
 
@@ -698,9 +702,16 @@ export default class PredictionCompontent extends Component {
         dependencies.push(dep)
 
 
-        console.log(dependencies)
+        this.setState({
+            vehicleDependencies: this.searchVehicleDependencies(data, array.filter(i => i.type === 'V')),
+            generalDependencies: dependencies,
+            generalAverages:{'total':averageTotal, 'victims':averageVictims, 'ratio':averageRatio}
+        })
 
-        this.searchVehicleDependencies(data, array.filter(i => i.type === 'V'))
+        console.log('T:', averageTotal, ' V:', averageVictims, ' R:', averageRatio)
+
+
+
 
     }
 
@@ -710,6 +721,7 @@ export default class PredictionCompontent extends Component {
 
         let years = []
         let brands = []
+        let engines = []
 
         for (let i = 0; i < data.length; i++) {
             if (data[i].contributingFactor === "VEHICLE") {
@@ -718,6 +730,9 @@ export default class PredictionCompontent extends Component {
                 }
                 if (data[i].vehicleBrand !== '' && data[i].vehicleBrand !== '-') {
                     brands.push(data[i].vehicleBrand)
+                }
+                if (data[i].engineCylinders !== '' && data[i].engineCylinders !== '-') {
+                    engines.push(data[i].engineCylinders)
                 }
             }
         }
@@ -732,44 +747,51 @@ export default class PredictionCompontent extends Component {
         }
 
         let eariestYear = years[0]
-        let oldestYear = years[years.length-1]
-        let breakpointsFrequency = Math.ceil((eariestYear - oldestYear)/3)
+        let oldestYear = years[years.length - 1]
+        let breakpointsFrequency = Math.ceil((eariestYear - oldestYear) / 3)
 
-        let amountOfaccidentsByYears=[]
+        let amountOfaccidentsByYears = []
 
-        for(let freq=0;freq<3;freq++){
+        for (let freq = 0; freq < 3; freq++) {
             let sum = 0;
 
-            for(let i=0;i<years.length;i++){
-                if(
-                    ((oldestYear)+(freq*breakpointsFrequency)) <= years[i] &&
-                    years[i] < ((oldestYear)+((freq+1)*breakpointsFrequency))
-                ){
-                    sum = sum+1
+            for (let i = 0; i < years.length; i++) {
+                if (
+                    ((oldestYear) + (freq * breakpointsFrequency)) <= years[i] &&
+                    years[i] < ((oldestYear) + ((freq + 1) * breakpointsFrequency))
+                ) {
+                    sum = sum + 1
                 }
             }
-            amountOfaccidentsByYears.push({yearFrom:((oldestYear)+(freq*breakpointsFrequency)),yearTo:(((oldestYear)+((freq+1)*breakpointsFrequency))-1),amount:sum})
+            amountOfaccidentsByYears.push({
+                yearFrom: ((oldestYear) + (freq * breakpointsFrequency)),
+                yearTo: (((oldestYear) + ((freq + 1) * breakpointsFrequency)) - 1),
+                amount: sum
+            })
             sum = 0;
         }
 
-        console.log(amountOfaccidentsByYears)
+        (amountOfaccidentsByYears.sort((a, b) => {
+            if (b.amount > a.amount) return 1
+            else return -1
+        }))
 
         // dependence of brand and amount
 
-        let amountOfAccidentsByBrand=[]
+        let amountOfAccidentsByBrand = []
 
         let brandsWithNoRepeats = []
 
-        if(brands.length>0){
+        if (brands.length > 0) {
 
-            for(let i=0;i<brands.length;i++){
-                if(brandsWithNoRepeats.indexOf(brands[i]) < 0){
+            for (let i = 0; i < brands.length; i++) {
+                if (brandsWithNoRepeats.indexOf(brands[i]) < 0) {
                     brandsWithNoRepeats.push(brands[i])
                 }
             }
 
-            for(let i =0;i<brandsWithNoRepeats.length;i++){
-                amountOfAccidentsByBrand.push({brand:brandsWithNoRepeats[i],amount:(brands.filter(e=>e === brandsWithNoRepeats[i])).length})
+            for (let i = 0; i < brandsWithNoRepeats.length; i++) {
+                amountOfAccidentsByBrand.push({brand: brandsWithNoRepeats[i], amount: (brands.filter(e => e === brandsWithNoRepeats[i])).length})
             }
 
             (amountOfAccidentsByBrand.sort((a, b) => {
@@ -778,10 +800,100 @@ export default class PredictionCompontent extends Component {
                 })
             )
 
-            console.log(amountOfAccidentsByBrand)
+        }
+
+        // dependence engine cylinders and amount
+
+        let enginesWithNoRepeats = []
+        let amountOfAccidentsByEngines = []
+
+        if (engines.length > 0) {
+
+
+            for (let i = 0; i < engines.length; i++) {
+                if (enginesWithNoRepeats.indexOf(engines[i]) < 0) {
+                    enginesWithNoRepeats.push(engines[i])
+                }
+            }
+
+            for (let i = 0; i < enginesWithNoRepeats.length; i++) {
+                amountOfAccidentsByEngines.push({
+                    cylinders: enginesWithNoRepeats[i],
+                    amount: (engines.filter(e => e === enginesWithNoRepeats[i])).length
+                })
+            }
+
+            (amountOfAccidentsByEngines.sort((a, b) => {
+                    if (b.amount > a.amount) return 1
+                    else return -1
+                })
+            )
+
+        }
+
+        // dependencies of most common configuration with higher keys/values
+
+        let amountOfFactor = Array.from(array, item => {
+            return {
+                ...item,
+                amountOfMatching: 0
+            }
+        })
+
+        for (let i = 0; i < amountOfFactor.length; i++) {
+            let matches = 0;
+            for (let j = 0; j < data.length; j++) {
+                if (
+                    data[j].contributingFactorDescription === amountOfFactor[i].factor &&
+                    amountOfaccidentsByYears[0].yearFrom <= data[j].verhicleYear &&
+                    data[j].verhicleYear < amountOfaccidentsByYears[0].yearTo &&
+                    (data[j].vehicleBrand === amountOfAccidentsByBrand[0].brand || data[j].vehicleBrand === amountOfAccidentsByBrand[1].brand || data[j].vehicleBrand === amountOfAccidentsByBrand[2].brand || data[j].vehicleBrand === amountOfAccidentsByBrand[3].brand) &&
+                    (data[j].engineCylinders === amountOfAccidentsByEngines[0].cylinders || data[j].engineCylinders === amountOfAccidentsByEngines[1].cylinders)
+                ) {
+                    matches += 1
+                }
+            }
+            amountOfFactor[i].amountOfMatching = matches
+        }
+
+        (amountOfFactor.sort((a, b) => {
+                if (b.amountOfMatching > a.amountOfMatching) return 1
+                else return -1
+            })
+        )
+
+
+        // dependencies how many maches are in total for most common factor and generally
+
+        let matchingToTotalPercent = []
+
+        let sumOfTotal = 0
+        let sumOfMatches = 0
+
+        for (let i = 0; i < amountOfFactor.length; i++) {
+            sumOfMatches +=amountOfFactor[i].amountOfMatching
+            sumOfTotal +=amountOfFactor[i].total
         }
 
 
+        matchingToTotalPercent.push(
+            {
+                type:'most common factory - '+amountOfFactor[0].factor,
+                total: amountOfFactor[0].total,
+                matches:amountOfFactor[0].amountOfMatching,
+                percent: ((amountOfFactor[0].amountOfMatching*100)/amountOfFactor[0].total).toFixed(2)
+            }
+        )
+        matchingToTotalPercent.push(
+            {
+                type:'generally in vehicle',
+                total: sumOfTotal,
+                matches:sumOfMatches,
+                percent: ((sumOfMatches*100)/sumOfTotal).toFixed(2)
+            }
+        )
+
+        return([amountOfaccidentsByYears,amountOfAccidentsByBrand,amountOfAccidentsByEngines,matchingToTotalPercent])
 
     }
 
@@ -866,6 +978,50 @@ export default class PredictionCompontent extends Component {
                                                             <LabelSeries data={this.state.processedChart} getLabel={d => d.ratio}
                                                                          style={{fontSize: '10px'}} rotation={-5}/>
                                                         </XYPlot>
+                                                    </div>
+                                                    <div id={'depenciesAndConclusions'}>
+                                                        <h2>Dependencies and conclusions</h2>
+                                                        <div>
+                                                            {
+                                                                Boolean(this.state.generalAverages)?
+                                                                    <div>
+                                                                        <h4>Average amounts based on all factors</h4>
+                                                                        <div>Average total: <label style={{marginLeft:'5px'}}>{this.state.generalAverages.total}</label></div>
+                                                                        <div>Average victims: <label style={{marginLeft:'5px'}}>{this.state.generalAverages.victims}</label></div>
+                                                                        <div>Average ratio: <label style={{marginLeft:'5px'}}>{this.state.generalAverages.ratio}</label></div>
+
+                                                                    </div>
+                                                                    : ""
+                                                            }
+                                                            {
+                                                                Boolean(this.state.generalDependencies)?
+                                                                    <div>
+                                                                        <h4>General dependencies based on average values</h4>
+                                                                        <div>Most dangerous type of factors: <label style={{marginLeft:'5px'}}>{this.state.generalDependencies[0]}</label></div>
+                                                                        <div>Most dangerous and common factor caused by vehicle: <label style={{marginLeft:'5px'}}>{this.state.generalDependencies[1]}</label></div>
+                                                                        <div>Most dangerous and common factor caused by human: <label style={{marginLeft:'5px'}}>{this.state.generalDependencies[2]}</label></div>
+                                                                        <div>Most dangerous and common factor caused by environment: <label style={{marginLeft:'5px'}}>{this.state.generalDependencies[3]}</label></div>
+                                                                    </div>
+                                                                    : ""
+                                                            }
+                                                            {
+                                                                Boolean(this.state.vehicleDependencies)?
+                                                                    <div>
+                                                                        <h4>Dependencies between failures based on accidents caused by vehicle</h4>
+                                                                        <div>Most popular period of time of cars inlvolved to accidents: <label style={{marginLeft:'5px'}}>{this.state.vehicleDependencies[0][0].yearFrom+' - '+this.state.vehicleDependencies[0][0].yearTo}</label></div>
+                                                                        <div>Most popular brands of cars inlvolved to accidents: <label style={{marginLeft:'5px'}}>{this.state.vehicleDependencies[1][0].brand+', '+this.state.vehicleDependencies[1][1].brand+', '+this.state.vehicleDependencies[1][2].brand+', '+this.state.vehicleDependencies[1][3].brand}</label></div>
+                                                                        <div>Most popular number of engine cylinders in cars inlvolved to accidents: <label style={{marginLeft:'5px'}}>{this.state.vehicleDependencies[2][0].cylinders+', '+this.state.vehicleDependencies[2][1].cylinders}</label></div>
+                                                                        <div>
+                                                                            Percentage of cars that granted the above conditions - {this.state.vehicleDependencies[3][0].type} <label style={{marginLeft:'5px'}}>{this.state.vehicleDependencies[3][0].matches+' from '+this.state.vehicleDependencies[3][0].total+': '+this.state.vehicleDependencies[3][0].percent+'%'}</label>
+                                                                        </div>
+                                                                        <div>
+                                                                            Percentage of cars that granted the above conditions - {this.state.vehicleDependencies[3][1].type} <label style={{marginLeft:'5px'}}>{this.state.vehicleDependencies[3][1].matches+' from '+this.state.vehicleDependencies[3][1].total+': '+this.state.vehicleDependencies[3][1].percent+'%'}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    : ''
+                                                            }
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 :
