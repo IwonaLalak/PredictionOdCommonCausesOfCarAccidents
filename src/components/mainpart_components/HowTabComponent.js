@@ -20,15 +20,6 @@ export default class HowTabComponent extends Component {
                         How it works tab component
                     </Col>
                     <Col xs={12}>
-                        <div>1) Type of body primary (cars / law enf., services, pedestrian etc)</div>
-                        <div>2) If there arent records (like pedestrian, taxi etc) go to point 3. Else remark </div>
-                        <div>3) A contributing factor description</div>
-                        <div>4) Other contributing factor description</div>
-                        <div>5) Event type</div>
-                        <div>6) Action prior to accident</div>
-
-                    </Col>
-                    <Col xs={12}>
                         <Row>
                             <Col xs={12} lg={4}>
 
