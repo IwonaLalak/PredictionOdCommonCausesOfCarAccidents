@@ -570,7 +570,7 @@ export default class PredictionCompontent extends Component {
         ]
 
 
-        for (let i=0;i<data.length;i++) {
+        for (let i = 0; i < data.length; i++) {
 
             let row = array.find(r => r.factor === data[i].contributingFactorDescription)
             if (row) {
@@ -580,22 +580,210 @@ export default class PredictionCompontent extends Component {
                 row.total = previousTotal + 1
                 if (data[i].numberOfOccupants !== '-' && data[i].numberOfOccupants !== '') {
                     row.victims = previousVictims + data[i].numberOfOccupants
-                    row.ratio = ((previousVictims + data[i].numberOfOccupants)/(previousTotal + 1)).toFixed(2)
+                    row.ratio = ((previousVictims + data[i].numberOfOccupants) / (previousTotal + 1)).toFixed(2)
                 } else {
-                    row.ratio = ((previousVictims)/(previousTotal + 1)).toFixed(2)
+                    row.ratio = ((previousVictims) / (previousTotal + 1)).toFixed(2)
                 }
-                
-                
+
+
             }
         }
 
+
         this.setState({
-            processedChart:array
+            processedChart: array
         })
+
+
+        let sortedByTotal = Array.from(array)
+
+        sortedByTotal.sort((a, b) => {
+                if (b.total > a.total) return 1
+                else return -1
+            }
+        )
+        let sortedByVictims = Array.from(array)
+
+        sortedByVictims.sort((a, b) => {
+                if (b.victims > a.victims) return 1
+                else return -1
+            }
+        )
+        let sortedByRatio = Array.from(array)
+
+        sortedByRatio.sort((a, b) => {
+                if (b.ratio > a.ratio) return 1
+                else return -1
+            }
+        )
+
+        let half = parseInt(array.length / 2)
+
+
+        this.findDependenciesInData(data, array, sortedByTotal[half].total, sortedByVictims[half].victims, sortedByRatio[half].ratio)
 
 
     }
 
+    findDependenciesInData(data, array, averageTotal, averageVictims, averageRatio) {
+
+        // most common fault type, most comon factory vehicle type, most common factory human type, most common environment type
+        let dependencies = []
+
+
+        let arrV = []
+        let arrH = []
+        let arrE = []
+
+        // select this factors which are more common and more dangerous
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].total >= averageTotal && array[i].ratio >= averageRatio && array[i].victims >= averageVictims) {
+                if (array[i].type === 'V') arrV.push(array[i])
+                if (array[i].type === 'H') arrH.push(array[i])
+                if (array[i].type === 'E') arrE.push(array[i])
+            }
+        }
+
+        // most common factor type (human, vehicle or environment fault)
+
+        if (arrV.length > arrE.length && arrV.length > arrH.length) {
+            dependencies.push('VEHICLE')
+        }
+        else if (arrE.length > arrV.length && arrE.length > arrH.length) {
+            dependencies.push('ENVIRONMENT')
+        }
+        else dependencies.push('HUMAN')
+
+
+        // vehicle
+
+        // most common factor on vehicle type
+
+        let highest = 0
+        let dep = ''
+        for (let i = 0; i < arrV.length; i++) {
+            if (arrV[i].total > highest) {
+                highest = arrV[i].total
+                dep = arrV[i].factor
+            }
+        }
+        dependencies.push(dep)
+
+        // human
+
+        // most common factor on vehicle type
+
+        highest = 0
+        dep = ''
+        for (let i = 0; i < arrH.length; i++) {
+            if (arrH[i].total > highest) {
+                highest = arrH[i].total
+                dep = arrH[i].factor
+            }
+        }
+        dependencies.push(dep)
+
+        // environment
+
+        // most common factor on vehicle type
+
+        highest = 0
+        dep = ''
+        for (let i = 0; i < arrE.length; i++) {
+            if (arrE[i].total > highest) {
+                highest = arrE[i].total
+                dep = arrE[i].factor
+            }
+        }
+        dependencies.push(dep)
+
+
+        console.log(dependencies)
+
+        this.searchVehicleDependencies(data, array.filter(i => i.type === 'V'))
+
+    }
+
+    searchVehicleDependencies(data, array) {
+
+        // dependence of year and amount
+
+        let years = []
+        let brands = []
+
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].contributingFactor === "VEHICLE") {
+                if (data[i].verhicleYear !== '' && data[i].verhicleYear !== '-') {
+                    years.push(data[i].verhicleYear)
+                }
+                if (data[i].vehicleBrand !== '' && data[i].vehicleBrand !== '-') {
+                    brands.push(data[i].vehicleBrand)
+                }
+            }
+        }
+        if (years.length > 0) {
+
+            (years.sort((a, b) => {
+                    if (b > a) return 1
+                    else return -1
+                })
+            )
+
+        }
+
+        let eariestYear = years[0]
+        let oldestYear = years[years.length-1]
+        let breakpointsFrequency = Math.ceil((eariestYear - oldestYear)/3)
+
+        let amountOfaccidentsByYears=[]
+
+        for(let freq=0;freq<3;freq++){
+            let sum = 0;
+
+            for(let i=0;i<years.length;i++){
+                if(
+                    ((oldestYear)+(freq*breakpointsFrequency)) <= years[i] &&
+                    years[i] < ((oldestYear)+((freq+1)*breakpointsFrequency))
+                ){
+                    sum = sum+1
+                }
+            }
+            amountOfaccidentsByYears.push({yearFrom:((oldestYear)+(freq*breakpointsFrequency)),yearTo:(((oldestYear)+((freq+1)*breakpointsFrequency))-1),amount:sum})
+            sum = 0;
+        }
+
+        console.log(amountOfaccidentsByYears)
+
+        // dependence of brand and amount
+
+        let amountOfAccidentsByBrand=[]
+
+        let brandsWithNoRepeats = []
+
+        if(brands.length>0){
+
+            for(let i=0;i<brands.length;i++){
+                if(brandsWithNoRepeats.indexOf(brands[i]) < 0){
+                    brandsWithNoRepeats.push(brands[i])
+                }
+            }
+
+            for(let i =0;i<brandsWithNoRepeats.length;i++){
+                amountOfAccidentsByBrand.push({brand:brandsWithNoRepeats[i],amount:(brands.filter(e=>e === brandsWithNoRepeats[i])).length})
+            }
+
+            (amountOfAccidentsByBrand.sort((a, b) => {
+                    if (b.amount > a.amount) return 1
+                    else return -1
+                })
+            )
+
+            console.log(amountOfAccidentsByBrand)
+        }
+
+
+
+    }
 
     render() {
 
@@ -648,29 +836,35 @@ export default class PredictionCompontent extends Component {
                                             <div id={'treeResultView'}>{this.showTreeStructure(this.state.processed)}</div>
                                         </div>
                                         {
-                                            (this.state.processedChart.length>0)?
+                                            (this.state.processedChart.length > 0) ?
                                                 <div style={{marginTop: '15px'}}>
                                                     <h2>Result - Chart view:</h2>
-                                                    <h4 style={{textAlign:'center'}}><i className={'fa fa-list'}></i> Most common accidents by factor</h4>
-                                                    <div style={{overflowX:'scroll'}}>
-                                                        <XYPlot width={1600} height={500}  xType="ordinal" getX={d => d.factor} getY={d => d.total} margin={{left:50,top:10,bottom:250}}>
+                                                    <h4 style={{textAlign: 'center'}}><i className={'fa fa-list'}></i> Most common accidents by factor
+                                                    </h4>
+                                                    <div style={{overflowX: 'scroll'}}>
+                                                        <XYPlot width={1600} height={500} xType="ordinal" getX={d => d.factor} getY={d => d.total}
+                                                                margin={{left: 50, top: 10, bottom: 250}}>
                                                             <VerticalGridLines/>
                                                             <HorizontalGridLines/>
                                                             <XAxis tickLabelAngle={-60}/>
                                                             <YAxis title={'Total amount'}/>
                                                             <BarSeries data={this.state.processedChart} color={'#83c33a'}/>
-                                                            <LabelSeries data={this.state.processedChart} getLabel={d => d.total} style={{fontSize:'10px'}} rotation={-5}/>
+                                                            <LabelSeries data={this.state.processedChart} getLabel={d => d.total}
+                                                                         style={{fontSize: '10px'}} rotation={-5}/>
                                                         </XYPlot>
                                                     </div>
-                                                    <h4 style={{textAlign:'center'}}><i className={'fa fa-warning'}></i> Most dangerous accidents by factor</h4>
-                                                    <div style={{overflowX:'scroll'}}>
-                                                        <XYPlot width={1600} height={500}  xType="ordinal" getX={d => d.factor} getY={d => d.ratio} margin={{left:50,top:10,bottom:250}}>
+                                                    <h4 style={{textAlign: 'center'}}><i className={'fa fa-warning'}></i> Most dangerous accidents by
+                                                        factor</h4>
+                                                    <div style={{overflowX: 'scroll'}}>
+                                                        <XYPlot width={1600} height={500} xType="ordinal" getX={d => d.factor} getY={d => d.ratio}
+                                                                margin={{left: 50, top: 10, bottom: 250}}>
                                                             <VerticalGridLines/>
                                                             <HorizontalGridLines/>
                                                             <XAxis tickLabelAngle={-60}/>
                                                             <YAxis title={'Victims  to total ratio'}/>
                                                             <BarSeries data={this.state.processedChart} color={'#83c33a'}/>
-                                                            <LabelSeries data={this.state.processedChart} getLabel={d => d.ratio} style={{fontSize:'10px'}} rotation={-5}/>
+                                                            <LabelSeries data={this.state.processedChart} getLabel={d => d.ratio}
+                                                                         style={{fontSize: '10px'}} rotation={-5}/>
                                                         </XYPlot>
                                                     </div>
                                                 </div>
