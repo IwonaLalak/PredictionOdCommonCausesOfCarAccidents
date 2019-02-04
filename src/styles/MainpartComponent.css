@@ -8,4 +8,31 @@
 #MAINPART_COMPONENT .tab_container {
   margin-top: 15px;
 }
+#MAINPART_COMPONENT #treeResultView {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 15px;
+  /*ul:hover{
+      border-color: rgba(49, 110, 4, 0.5);
+    }*/
+}
+#MAINPART_COMPONENT #treeResultView ul {
+  margin: 0 10px;
+  padding: 5px 5px 5px 25px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+#MAINPART_COMPONENT #treeResultView ul li {
+  list-style: square;
+}
+#MAINPART_COMPONENT #treeResultView ul li a {
+  min-width: 100px;
+  display: inline-block;
+  color: #192f45;
+  cursor: pointer;
+}
+#MAINPART_COMPONENT #treeResultView ul li a:hover {
+  text-decoration: underline;
+}
 /*# sourceMappingURL=MainpartComponent.css.map */

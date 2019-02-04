@@ -1,12 +1,44 @@
-#MAINPART_COMPONENT{
+#MAINPART_COMPONENT {
   width: 80%;
   margin: 15px auto;
 
-  .nav.nav-tabs{
+  .nav.nav-tabs {
     cursor: pointer;
   }
 
-  .tab_container{
-    margin-top:15px
+  .tab_container {
+    margin-top: 15px
   }
+
+  #treeResultView {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top:15px;
+
+    ul {
+      margin: 0 10px;
+      padding: 5px 5px 5px 25px;
+      border:1px solid #ddd;
+      border-radius: 5px;
+
+      li {
+        list-style: square;
+        a {
+          min-width:100px;
+          display:inline-block;
+          color: #192f45;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    /*ul:hover{
+      border-color: rgba(49, 110, 4, 0.5);
+    }*/
+
+  }
+
 }
